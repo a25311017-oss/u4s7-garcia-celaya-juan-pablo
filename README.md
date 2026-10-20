@@ -1,49 +1,168 @@
-# 🔐 Aplicación Web con Autenticación y Control de Acceso | Django
+# 🔐 Aplicación Web con Django | Unidad 4 - Semana 7
 
-Unidad 3 - Semana 6 | **APLICAWEB**
+## 📌 Descripción del proyecto
 
-Este proyecto implementa un sistema completo de **Autenticación de Usuarios, Manejo de Sesiones y Control de Acceso Basado en Propietario (Aislamiento de Datos)** utilizando el framework Django y Tailwind CSS.
+Este proyecto forma parte de las actividades de la asignatura de **Desarrollo de Aplicaciones Web** de la Universidad Tecnológica de Hermosillo (UTH).
 
----
+Consiste en una aplicación web desarrollada con Django que permite gestionar usuarios, controlar el acceso al sistema y administrar información de manera segura mediante una interfaz web.
 
-## 📌 Características Principal
-
-* 👤 **Sistema de Autenticación de Fábrica (`django.contrib.auth`):**
-  * Registro de usuarios (`UserCreationForm`) con inicio de sesión automático.
-  * Inicio de sesión seguro (`AuthenticationForm`).
-  * Cierre de sesión seguro mediante peticiones POST.
-  * Hash seguro de contraseñas (PBKDF2 por defecto en Django).
-
-* 🛡️ **Protección de Rutas y Seguridad:**
-  * Uso del decorador `@login_required` para bloquear accesos no autorizados a la gestión de datos.
-  * Configuración de redirección mediante `LOGIN_URL = 'login'`.
-  * Protección contra ataques CSRF mediante `{% csrf_token %}`.
-  * Checklist pre-deploy de producción (`DEBUG = False`, `ALLOWED_HOSTS`, `CSRF_TRUSTED_ORIGINS`).
-
-* 🔐 **Aislamiento de Datos por Usuario:**
-  * Vinculación del modelo `Servicio` con el modelo `User` de Django mediante `ForeignKey`.
-  * Asignación automática del autor en el guardado (`servicio.usuario = request.user`).
-  * **Acceso Restringido:** Cada usuario solo puede ver, editar y eliminar sus **propios** registros.
-  * Validación de propiedad mediante consulta directa (`get_object_or_404(Servicio, pk=pk, usuario=request.user)`).
-
-* 💬 **Feedback de Usuario:**
-  * Implementación de mensajes flash (`django.contrib.messages`) con soporte de estilos Tailwind CSS (éxito, error, advertencia).
+**Unidad:** 4  
+**Semana:** 7  
+**Alumno:** Juan Pablo García Celaya  
+**Matrícula:** 25311017  
+**Grupo:** DSM 4-1
 
 ---
 
-## 🛠️ Tecnologías Utilizadas
+## 🚀 Características principales
 
-* **Lenguaje:** Python 3.x
-* **Framework Web:** Django 5.x
-* **Base de Datos:** MySQL / PostgreSQL
-* **Frontend:** HTML5, Tailwind CSS
-* **Despliegue:** Render
+- 🔑 **Autenticación de usuarios**
+  - Registro de nuevos usuarios.
+  - Inicio y cierre de sesión.
+  - Manejo seguro de contraseñas mediante Django.
+
+- 🛡️ **Control de acceso**
+  - Protección de páginas que requieren autenticación.
+  - Restricción de acceso a usuarios no autorizados.
+  - Validación de sesiones.
+
+- 📋 **Gestión de información**
+  - Registro y consulta de información desde la aplicación.
+  - Organización de los datos mediante modelos de Django.
+  - Conexión con una base de datos.
+
+- 💬 **Mensajes del sistema**
+  - Notificaciones de éxito.
+  - Avisos de errores.
+  - Mensajes para orientar al usuario durante la navegación.
+
+- 🎨 **Interfaz web**
+  - Plantillas HTML.
+  - Diseño adaptable con Tailwind CSS.
+  - Navegación entre las diferentes secciones.
 
 ---
 
-## 🚀 Instalación y Configuración Local
+## 🛠️ Tecnologías utilizadas
 
-1. **Clonar el repositorio:**
-   ```bash
-   git clone [https://github.com/TU-USUARIO/u3s6-apellidopaterno-apellidomaterno-nombres.git](https://github.com/TU-USUARIO/u3s6-apellidopaterno-apellidomaterno-nombres.git)
-   cd u3s6-apellidopaterno-apellidomaterno-nombres
+- **Lenguaje:** Python 3.x
+- **Framework web:** Django 5.x
+- **Frontend:** HTML5, CSS3 y Tailwind CSS
+- **Base de datos:** MySQL o SQLite, según la configuración del proyecto
+- **Control de versiones:** Git y GitHub
+- **Editor recomendado:** Visual Studio Code
+
+---
+
+## 📂 Estructura del proyecto
+
+La estructura puede variar dependiendo de los archivos incluidos en la práctica.
+
+```text
+u4s7-garcia-celaya-juan-pablo/
+│
+├── manage.py
+├── requirements.txt
+├── README.md
+│
+├── miproyecto/
+│   ├── settings.py
+│   ├── urls.py
+│   ├── asgi.py
+│   └── wsgi.py
+│
+└── core/
+    ├── models.py
+    ├── views.py
+    ├── urls.py
+    ├── forms.py
+    └── templates/
+```
+
+---
+
+## ⚙️ Instalación y configuración local
+
+### 1. Clonar el repositorio
+
+```bash
+git clone https://github.com/a25311017-oss/u4s7-garcia-celaya-juan-pablo.git
+```
+
+### 2. Entrar a la carpeta del proyecto
+
+```bash
+cd u4s7-garcia-celaya-juan-pablo
+```
+
+### 3. Crear un entorno virtual
+
+En Windows:
+
+```powershell
+python -m venv venv
+```
+
+### 4. Activar el entorno virtual
+
+```powershell
+.\venv\Scripts\Activate.ps1
+```
+
+### 5. Instalar las dependencias
+
+```bash
+pip install -r requirements.txt
+```
+
+### 6. Aplicar las migraciones
+
+```bash
+python manage.py migrate
+```
+
+### 7. Crear un superusuario (opcional)
+
+```bash
+python manage.py createsuperuser
+```
+
+### 8. Ejecutar el servidor de desarrollo
+
+```bash
+python manage.py runserver
+```
+
+Abrir la siguiente dirección en el navegador:
+
+http://127.0.0.1:8000/
+
+---
+
+## 🔒 Consideraciones de seguridad
+
+- No publicar contraseñas ni credenciales de bases de datos.
+- Mantener `DEBUG = False` en producción.
+- Configurar correctamente `ALLOWED_HOSTS`.
+- Utilizar variables de entorno para los datos sensibles.
+- Proteger las vistas y los formularios que requieren autenticación.
+- Mantener actualizadas las dependencias del proyecto.
+
+---
+
+## 🎯 Objetivo de la práctica
+
+Aplicar los conocimientos adquiridos durante la Unidad 4, Semana 7, mediante el desarrollo y la configuración de una aplicación web utilizando Django, reforzando el uso de modelos, vistas, plantillas, rutas y mecanismos de seguridad.
+
+---
+
+## 👨‍💻 Autor
+
+**Juan Pablo García Celaya**  
+Matrícula: 25311017  
+Grupo: DSM 4-1  
+Universidad Tecnológica de Hermosillo (UTH)
+
+---
+
+*Proyecto académico desarrollado con fines educativos.*
